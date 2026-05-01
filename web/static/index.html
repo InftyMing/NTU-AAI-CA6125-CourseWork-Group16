@@ -145,13 +145,19 @@
           <h2>Models and cross-validation</h2>
           <span>lower MCRMSE is better; numbers come from 5-fold OOF</span>
         </div>
-        <div class="grid-two">
-          <article class="chart-card wide">
-            <header>
-              <h3>CV MCRMSE leaderboard</h3>
-              <small>click a row to see per-target detail</small>
-            </header>
+        <article class="chart-card leaderboard-card">
+          <header>
+            <h3>CV MCRMSE leaderboard</h3>
+            <small>click a row to see per-target detail</small>
+          </header>
+          <div class="table-scroll">
             <table class="leaderboard">
+              <colgroup>
+                <col class="col-model" />
+                <col class="col-family" />
+                <col class="col-score" />
+                <col class="col-file" />
+              </colgroup>
               <thead>
                 <tr>
                   <th>Model</th>
@@ -162,7 +168,9 @@
               </thead>
               <tbody id="metricsBody"></tbody>
             </table>
-          </article>
+          </div>
+        </article>
+        <div class="grid-two">
           <article class="chart-card">
             <header>
               <h3>Per-target RMSE</h3>
@@ -170,14 +178,14 @@
             </header>
             <svg id="perTargetChart" viewBox="0 0 460 260" preserveAspectRatio="xMidYMid meet"></svg>
           </article>
+          <article class="chart-card">
+            <header>
+              <h3>Fold-level stability</h3>
+              <small>per-fold MCRMSE for the highlighted model</small>
+            </header>
+            <svg id="foldChart" viewBox="0 0 720 200" preserveAspectRatio="xMidYMid meet"></svg>
+          </article>
         </div>
-        <article class="chart-card">
-          <header>
-            <h3>Fold-level stability</h3>
-            <small>per-fold MCRMSE for the highlighted model</small>
-          </header>
-          <svg id="foldChart" viewBox="0 0 720 200" preserveAspectRatio="xMidYMid meet"></svg>
-        </article>
       </section>
 
       <section id="errors" class="panel">

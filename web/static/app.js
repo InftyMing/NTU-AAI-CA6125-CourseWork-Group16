@@ -215,11 +215,20 @@ function renderMetrics(payload) {
   body.innerHTML = items
     .map((item) => {
       const family = COMPONENT_FAMILIES[item.name] ?? "—";
+      const fullPath = (item.submission_path || "").replace(/\\/g, "/");
+      const slash = fullPath.lastIndexOf("/");
+      const fileName = slash >= 0 ? fullPath.slice(slash + 1) : fullPath;
+      const fileDir = slash >= 0 ? fullPath.slice(0, slash + 1) : "";
+      const shortName = fileName.replace(/^submission_/, "");
+      const fileCell = fullPath
+        ? `<span class="file-name" title="${fullPath}">${shortName}</span>` +
+          (fileDir ? `<span class="file-dir" title="${fullPath}">${fileDir}</span>` : "")
+        : "—";
       return `<tr data-name="${item.name}">
         <td><strong>${item.name}</strong><div class="kpi-foot">${COMPONENT_DESCRIPTIONS[item.name] ?? ""}</div></td>
         <td>${family}</td>
         <td class="score">${fmt(item.cv_mcrmse)}</td>
-        <td class="file">${item.submission_path?.replace(/\\/g, "/") ?? ""}</td>
+        <td class="file">${fileCell}</td>
       </tr>`;
     })
     .join("");
