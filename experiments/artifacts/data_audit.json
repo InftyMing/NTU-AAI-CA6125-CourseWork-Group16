@@ -1,0 +1,249 @@
+{
+  "train_rows": 3911,
+  "test_rows": 3,
+  "target_columns": [
+    "cohesion",
+    "syntax",
+    "vocabulary",
+    "phraseology",
+    "grammar",
+    "conventions"
+  ],
+  "missing_values_train": {
+    "text_id": 0,
+    "full_text": 0,
+    "cohesion": 0,
+    "syntax": 0,
+    "vocabulary": 0,
+    "phraseology": 0,
+    "grammar": 0,
+    "conventions": 0
+  },
+  "missing_values_test": {
+    "text_id": 0,
+    "full_text": 0
+  },
+  "target_summary": {
+    "cohesion": {
+      "count": 3911.0,
+      "mean": 3.1271,
+      "std": 0.6625,
+      "min": 1.0,
+      "25%": 2.5,
+      "50%": 3.0,
+      "75%": 3.5,
+      "max": 5.0
+    },
+    "syntax": {
+      "count": 3911.0,
+      "mean": 3.0283,
+      "std": 0.6444,
+      "min": 1.0,
+      "25%": 2.5,
+      "50%": 3.0,
+      "75%": 3.5,
+      "max": 5.0
+    },
+    "vocabulary": {
+      "count": 3911.0,
+      "mean": 3.2357,
+      "std": 0.5831,
+      "min": 1.0,
+      "25%": 3.0,
+      "50%": 3.0,
+      "75%": 3.5,
+      "max": 5.0
+    },
+    "phraseology": {
+      "count": 3911.0,
+      "mean": 3.1168,
+      "std": 0.656,
+      "min": 1.0,
+      "25%": 2.5,
+      "50%": 3.0,
+      "75%": 3.5,
+      "max": 5.0
+    },
+    "grammar": {
+      "count": 3911.0,
+      "mean": 3.0329,
+      "std": 0.6998,
+      "min": 1.0,
+      "25%": 2.5,
+      "50%": 3.0,
+      "75%": 3.5,
+      "max": 5.0
+    },
+    "conventions": {
+      "count": 3911.0,
+      "mean": 3.0811,
+      "std": 0.6715,
+      "min": 1.0,
+      "25%": 2.5,
+      "50%": 3.0,
+      "75%": 3.5,
+      "max": 5.0
+    }
+  },
+  "target_correlations": {
+    "cohesion": {
+      "cohesion": 1.0,
+      "syntax": 0.6955,
+      "vocabulary": 0.6662,
+      "phraseology": 0.6901,
+      "grammar": 0.6387,
+      "conventions": 0.6662
+    },
+    "syntax": {
+      "cohesion": 0.6955,
+      "syntax": 1.0,
+      "vocabulary": 0.6806,
+      "phraseology": 0.7255,
+      "grammar": 0.7095,
+      "conventions": 0.7
+    },
+    "vocabulary": {
+      "cohesion": 0.6662,
+      "syntax": 0.6806,
+      "vocabulary": 1.0,
+      "phraseology": 0.7353,
+      "grammar": 0.6549,
+      "conventions": 0.6643
+    },
+    "phraseology": {
+      "cohesion": 0.6901,
+      "syntax": 0.7255,
+      "vocabulary": 0.7353,
+      "phraseology": 1.0,
+      "grammar": 0.7197,
+      "conventions": 0.6668
+    },
+    "grammar": {
+      "cohesion": 0.6387,
+      "syntax": 0.7095,
+      "vocabulary": 0.6549,
+      "phraseology": 0.7197,
+      "grammar": 1.0,
+      "conventions": 0.6733
+    },
+    "conventions": {
+      "cohesion": 0.6662,
+      "syntax": 0.7,
+      "vocabulary": 0.6643,
+      "phraseology": 0.6668,
+      "grammar": 0.6733,
+      "conventions": 1.0
+    }
+  },
+  "train_text_summary": {
+    "char_count": {
+      "count": 3911.0,
+      "mean": 2334.5224,
+      "std": 1033.406,
+      "min": 82.0,
+      "25%": 1597.0,
+      "50%": 2173.0,
+      "75%": 2866.5,
+      "max": 6044.0
+    },
+    "word_count": {
+      "count": 3911.0,
+      "mean": 430.493,
+      "std": 191.8684,
+      "min": 14.0,
+      "25%": 294.0,
+      "50%": 402.0,
+      "75%": 526.5,
+      "max": 1260.0
+    },
+    "sentence_count": {
+      "count": 3911.0,
+      "mean": 18.5029,
+      "std": 10.4027,
+      "min": 1.0,
+      "25%": 11.0,
+      "50%": 17.0,
+      "75%": 24.0,
+      "max": 100.0
+    },
+    "paragraph_count": {
+      "count": 3911.0,
+      "mean": 5.5763,
+      "std": 3.1963,
+      "min": 1.0,
+      "25%": 4.0,
+      "50%": 5.0,
+      "75%": 6.0,
+      "max": 52.0
+    },
+    "avg_word_len": {
+      "count": 3911.0,
+      "mean": 4.3418,
+      "std": 0.2934,
+      "min": 3.3259,
+      "25%": 4.1403,
+      "50%": 4.3333,
+      "75%": 4.5242,
+      "max": 5.715
+    }
+  },
+  "test_text_summary": {
+    "char_count": {
+      "count": 3.0,
+      "mean": 2917.3333,
+      "std": 1135.7563,
+      "min": 2167.0,
+      "25%": 2264.0,
+      "50%": 2361.0,
+      "75%": 3292.5,
+      "max": 4224.0
+    },
+    "word_count": {
+      "count": 3.0,
+      "mean": 554.3333,
+      "std": 244.6719,
+      "min": 386.0,
+      "25%": 414.0,
+      "50%": 442.0,
+      "75%": 638.5,
+      "max": 835.0
+    },
+    "sentence_count": {
+      "count": 3.0,
+      "mean": 20.3333,
+      "std": 5.7735,
+      "min": 17.0,
+      "25%": 17.0,
+      "50%": 17.0,
+      "75%": 22.0,
+      "max": 27.0
+    },
+    "paragraph_count": {
+      "count": 3.0,
+      "mean": 4.6667,
+      "std": 1.5275,
+      "min": 3.0,
+      "25%": 4.0,
+      "50%": 5.0,
+      "75%": 5.5,
+      "max": 6.0
+    },
+    "avg_word_len": {
+      "count": 3.0,
+      "mean": 4.3318,
+      "std": 0.2775,
+      "min": 4.0539,
+      "25%": 4.1932,
+      "50%": 4.3326,
+      "75%": 4.4707,
+      "max": 4.6088
+    }
+  },
+  "sample_text_ids": [
+    "0016926B079C",
+    "0022683E9EA5",
+    "00299B378633",
+    "003885A45F42",
+    "0049B1DF5CCC"
+  ]
+}

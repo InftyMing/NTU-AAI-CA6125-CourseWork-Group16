@@ -1,0 +1,138 @@
+{
+  "overall": {
+    "mean": {
+      "cohesion": 0.00015895673859952087,
+      "syntax": 0.0021681339453427937,
+      "vocabulary": 0.0006274622382528165,
+      "phraseology": 0.0013413977548706578,
+      "grammar": 0.0028596611642047447,
+      "conventions": 0.0013666243501049798
+    },
+    "std": {
+      "cohesion": 0.5318719040217331,
+      "syntax": 0.509650622304766,
+      "vocabulary": 0.4564972375128086,
+      "phraseology": 0.5168991737405426,
+      "grammar": 0.5628767537547996,
+      "conventions": 0.5345834141858384
+    },
+    "mae": {
+      "cohesion": 0.43165989130459326,
+      "syntax": 0.4082930962806712,
+      "vocabulary": 0.3586932986520267,
+      "phraseology": 0.41421033700344095,
+      "grammar": 0.4550607043045921,
+      "conventions": 0.43040584731216064
+    },
+    "max_abs": {
+      "cohesion": 1.7088874300656616,
+      "syntax": 1.849338662208032,
+      "vocabulary": 1.9579681740951607,
+      "phraseology": 1.6920448896280509,
+      "grammar": 2.0231434961783865,
+      "conventions": 1.933964249124577
+    }
+  },
+  "length_buckets": [
+    {
+      "bucket": "Q1 short",
+      "count": 969,
+      "mcrmse": 0.5068513722413219,
+      "column_rmse": {
+        "cohesion": 0.5132915141683513,
+        "syntax": 0.49611849139901004,
+        "vocabulary": 0.44626066377244583,
+        "phraseology": 0.49442504187593816,
+        "grammar": 0.5612362672967941,
+        "conventions": 0.5297762549353917
+      },
+      "mean_word_count": 225.0577915376677
+    },
+    {
+      "bucket": "Q2 medium-short",
+      "count": 985,
+      "mcrmse": 0.5084361724489402,
+      "column_rmse": {
+        "cohesion": 0.5077776919983354,
+        "syntax": 0.498628453333183,
+        "vocabulary": 0.437381161017172,
+        "phraseology": 0.5085880464454484,
+        "grammar": 0.5718705455252185,
+        "conventions": 0.5263711363742842
+      },
+      "mean_word_count": 347.00710659898476
+    },
+    {
+      "bucket": "Q3 medium-long",
+      "count": 979,
+      "mcrmse": 0.5199622850354509,
+      "column_rmse": {
+        "cohesion": 0.5513094808920648,
+        "syntax": 0.5091404613265351,
+        "vocabulary": 0.44977084574476794,
+        "phraseology": 0.5177493044265508,
+        "grammar": 0.5552517746766871,
+        "conventions": 0.5365518431461005
+      },
+      "mean_word_count": 458.95301327885596
+    },
+    {
+      "bucket": "Q4 long",
+      "count": 978,
+      "mcrmse": 0.538635033235758,
+      "column_rmse": {
+        "cohesion": 0.553427085656387,
+        "syntax": 0.53381715264954,
+        "vocabulary": 0.4907741911864418,
+        "phraseology": 0.5453575870161933,
+        "grammar": 0.5629793607480259,
+        "conventions": 0.5454548221579603
+      },
+      "mean_word_count": 689.6319018404907
+    }
+  ],
+  "score_buckets": [
+    {
+      "bucket": "low (<=2.5)",
+      "count": 490,
+      "mcrmse": 0.6198313176699088,
+      "column_rmse": {
+        "cohesion": 0.6433697539132608,
+        "syntax": 0.6065066710070082,
+        "vocabulary": 0.5747597371633147,
+        "phraseology": 0.6302241214473856,
+        "grammar": 0.6280321614564668,
+        "conventions": 0.6360954610320165
+      },
+      "mean_average_target": 2.243197278911565
+    },
+    {
+      "bucket": "medium (2.5-3.5)",
+      "count": 2384,
+      "mcrmse": 0.45669833421958334,
+      "column_rmse": {
+        "cohesion": 0.47508681667712493,
+        "syntax": 0.44771990518507326,
+        "vocabulary": 0.3881487243627986,
+        "phraseology": 0.45273922457549404,
+        "grammar": 0.50536732394412,
+        "conventions": 0.47112801057288906
+      },
+      "mean_average_target": 2.978921979865772
+    },
+    {
+      "bucket": "high (>3.5)",
+      "count": 1037,
+      "mcrmse": 0.5944445297141651,
+      "column_rmse": {
+        "cohesion": 0.5936535672780598,
+        "syntax": 0.5873541408660745,
+        "vocabulary": 0.5324302362320191,
+        "phraseology": 0.5905818615580682,
+        "grammar": 0.6491762588775488,
+        "conventions": 0.6134711134732196
+      },
+      "mean_average_target": 3.79693024750884
+    }
+  ]
+}

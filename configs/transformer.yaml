@@ -1,0 +1,28 @@
+seed: 42
+n_splits: 5
+folds_to_train: [0]
+debug_rows: null
+data:
+  train_path: data/raw/train.csv
+  test_path: data/raw/test.csv
+  sample_submission_path: data/raw/sample_submission.csv
+output:
+  artifacts_dir: experiments/artifacts
+  models_dir: experiments/models
+  submissions_dir: experiments/submissions
+model:
+  name: microsoft/deberta-v3-base
+  max_length: 768
+  pooling: mean
+  dropout: 0.1
+training:
+  epochs: 3
+  train_batch_size: 4
+  eval_batch_size: 8
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.05
+  gradient_accumulation_steps: 2
+  fp16: true
+  max_grad_norm: 1.0
+  early_stopping_patience: 2

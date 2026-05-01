@@ -1,0 +1,643 @@
+{
+  "best": {
+    "name": "stacked_ensemble",
+    "cv_mcrmse": 0.5187324872911527,
+    "column_rmse": {
+      "cohesion": 0.5318719277748624,
+      "syntax": 0.5096552340753897,
+      "vocabulary": 0.45649766874069136,
+      "phraseology": 0.5169009142588089,
+      "grammar": 0.562884017875366,
+      "conventions": 0.5345851610217982
+    },
+    "fold_scores": [],
+    "submission_path": "experiments\\submissions\\submission_stacked_ensemble.csv",
+    "extras": {
+      "components": [
+        "ridge_tfidf_per_target",
+        "ridge_tfidf_fused",
+        "lgbm_svd_fused"
+      ],
+      "weights_per_target": {
+        "cohesion": [
+          0.30000000000000004,
+          0.25,
+          0.44999999999999996
+        ],
+        "syntax": [
+          0.35000000000000003,
+          0.2,
+          0.4499999999999999
+        ],
+        "vocabulary": [
+          0.45,
+          0.2,
+          0.35000000000000003
+        ],
+        "phraseology": [
+          0.65,
+          0.05,
+          0.3
+        ],
+        "grammar": [
+          0.6000000000000001,
+          0.05,
+          0.3499999999999999
+        ],
+        "conventions": [
+          0.6000000000000001,
+          0.1,
+          0.29999999999999993
+        ]
+      }
+    }
+  },
+  "candidates": [
+    {
+      "name": "ridge_tfidf",
+      "cv_mcrmse": 0.5330964712079889,
+      "column_rmse": {
+        "cohesion": 0.5470357432474355,
+        "syntax": 0.5273974250439949,
+        "vocabulary": 0.46830599897398617,
+        "phraseology": 0.5271627109212524,
+        "grammar": 0.5763512936749472,
+        "conventions": 0.5523256553863171
+      },
+      "fold_scores": [
+        {
+          "fold": 0,
+          "mcrmse": 0.5353403956388916,
+          "column_rmse": {
+            "cohesion": 0.5427422112911032,
+            "syntax": 0.5232173956513427,
+            "vocabulary": 0.4684435066154429,
+            "phraseology": 0.5222592965979725,
+            "grammar": 0.5872038307000533,
+            "conventions": 0.5681761329774345
+          }
+        },
+        {
+          "fold": 1,
+          "mcrmse": 0.5313645487614608,
+          "column_rmse": {
+            "cohesion": 0.5382958338912364,
+            "syntax": 0.5365931604447371,
+            "vocabulary": 0.47962216113697187,
+            "phraseology": 0.5348899268522467,
+            "grammar": 0.5630478334156904,
+            "conventions": 0.5357383768278826
+          }
+        },
+        {
+          "fold": 2,
+          "mcrmse": 0.5281975936223836,
+          "column_rmse": {
+            "cohesion": 0.5458901715438075,
+            "syntax": 0.5196180976959451,
+            "vocabulary": 0.45313803505466776,
+            "phraseology": 0.5274188392750584,
+            "grammar": 0.5742692347571842,
+            "conventions": 0.5488511834076387
+          }
+        },
+        {
+          "fold": 3,
+          "mcrmse": 0.5327333543056083,
+          "column_rmse": {
+            "cohesion": 0.5579598590792866,
+            "syntax": 0.526064075910311,
+            "vocabulary": 0.4617222273939255,
+            "phraseology": 0.5101191384836734,
+            "grammar": 0.5784156837590987,
+            "conventions": 0.5621191412073548
+          }
+        },
+        {
+          "fold": 4,
+          "mcrmse": 0.5374586145110601,
+          "column_rmse": {
+            "cohesion": 0.5500906369763964,
+            "syntax": 0.5313292700465998,
+            "vocabulary": 0.478073371177987,
+            "phraseology": 0.5406061643865663,
+            "grammar": 0.5785385571970397,
+            "conventions": 0.546113687281772
+          }
+        }
+      ],
+      "submission_path": "experiments\\submissions\\submission_ridge_tfidf.csv"
+    },
+    {
+      "name": "lgbm_text_features",
+      "cv_mcrmse": 0.6065380600785123,
+      "column_rmse": {
+        "cohesion": 0.5987427764579875,
+        "syntax": 0.5851345586797176,
+        "vocabulary": 0.5343154479332686,
+        "phraseology": 0.6185034856678675,
+        "grammar": 0.6794020250267299,
+        "conventions": 0.6231300667055029
+      },
+      "fold_scores": [
+        {
+          "fold": 0,
+          "mcrmse": 0.601834745320649,
+          "column_rmse": {
+            "cohesion": 0.583091629045369,
+            "syntax": 0.586655536524728,
+            "vocabulary": 0.5377767395998443,
+            "phraseology": 0.6058762691938033,
+            "grammar": 0.6713201841907422,
+            "conventions": 0.626288113369407
+          }
+        },
+        {
+          "fold": 1,
+          "mcrmse": 0.5950868437986823,
+          "column_rmse": {
+            "cohesion": 0.5747088166027572,
+            "syntax": 0.586712088247376,
+            "vocabulary": 0.5300537441850351,
+            "phraseology": 0.6209267177369799,
+            "grammar": 0.6572588486050904,
+            "conventions": 0.6008608474148549
+          }
+        },
+        {
+          "fold": 2,
+          "mcrmse": 0.602729672124711,
+          "column_rmse": {
+            "cohesion": 0.610775818359597,
+            "syntax": 0.5756463876472998,
+            "vocabulary": 0.515158097482852,
+            "phraseology": 0.6145359608223774,
+            "grammar": 0.6856133395834635,
+            "conventions": 0.614648428852676
+          }
+        },
+        {
+          "fold": 3,
+          "mcrmse": 0.6066583123599409,
+          "column_rmse": {
+            "cohesion": 0.6031481300946122,
+            "syntax": 0.5725831916623132,
+            "vocabulary": 0.5357140564715713,
+            "phraseology": 0.5990986315184272,
+            "grammar": 0.6876944904893183,
+            "conventions": 0.6417113739234034
+          }
+        },
+        {
+          "fold": 4,
+          "mcrmse": 0.6255279283709235,
+          "column_rmse": {
+            "cohesion": 0.6207796521029619,
+            "syntax": 0.6035676529410086,
+            "vocabulary": 0.552197460261398,
+            "phraseology": 0.6508017513685815,
+            "grammar": 0.6944783438720794,
+            "conventions": 0.6313427096795121
+          }
+        }
+      ],
+      "submission_path": "experiments\\submissions\\submission_lgbm_text_features.csv"
+    },
+    {
+      "name": "mean_baseline",
+      "cv_mcrmse": 0.6528128591170438,
+      "column_rmse": {
+        "cohesion": 0.6624575738938074,
+        "syntax": 0.6443166503300222,
+        "vocabulary": 0.5830738783573488,
+        "phraseology": 0.6559133669154555,
+        "grammar": 0.6997512064635503,
+        "conventions": 0.6713644787420782
+      },
+      "fold_scores": [],
+      "submission_path": "experiments\\submissions\\submission_mean_baseline.csv"
+    },
+    {
+      "name": "ridge_tfidf_per_target",
+      "cv_mcrmse": 0.5252452567520948,
+      "column_rmse": {
+        "cohesion": 0.5417511810393412,
+        "syntax": 0.5202447525160866,
+        "vocabulary": 0.4621466517186097,
+        "phraseology": 0.5199763704807846,
+        "grammar": 0.5677907264501056,
+        "conventions": 0.5395618583076404
+      },
+      "fold_scores": [
+        {
+          "fold": 0,
+          "mcrmse": 0.5257201574136029,
+          "column_rmse": {
+            "cohesion": 0.5337982012817383,
+            "syntax": 0.5152125098990046,
+            "vocabulary": 0.46157365263474076,
+            "phraseology": 0.5123581866965217,
+            "grammar": 0.5802411049050268,
+            "conventions": 0.5511372890645855
+          }
+        },
+        {
+          "fold": 1,
+          "mcrmse": 0.5256127066543116,
+          "column_rmse": {
+            "cohesion": 0.5368277128484424,
+            "syntax": 0.5292368476561543,
+            "vocabulary": 0.47705157733940645,
+            "phraseology": 0.5312895687635245,
+            "grammar": 0.5564487655688016,
+            "conventions": 0.5228217677495404
+          }
+        },
+        {
+          "fold": 2,
+          "mcrmse": 0.52236826558552,
+          "column_rmse": {
+            "cohesion": 0.5411705519729709,
+            "syntax": 0.5177272361022157,
+            "vocabulary": 0.45069310521134753,
+            "phraseology": 0.5214822469799532,
+            "grammar": 0.5661264361698103,
+            "conventions": 0.5370100170768219
+          }
+        },
+        {
+          "fold": 3,
+          "mcrmse": 0.5254718140813698,
+          "column_rmse": {
+            "cohesion": 0.5523366419064424,
+            "syntax": 0.5169548148318746,
+            "vocabulary": 0.4543935590042171,
+            "phraseology": 0.5044258723261821,
+            "grammar": 0.5689883450166536,
+            "conventions": 0.5557316514028491
+          }
+        },
+        {
+          "fold": 4,
+          "mcrmse": 0.526677204930692,
+          "column_rmse": {
+            "cohesion": 0.5444417359925491,
+            "syntax": 0.5219773299798612,
+            "vocabulary": 0.46655341550354146,
+            "phraseology": 0.5298287216416685,
+            "grammar": 0.5668786643979901,
+            "conventions": 0.530383362068542
+          }
+        }
+      ],
+      "submission_path": "experiments\\submissions\\submission_ridge_per_target.csv",
+      "extras": {
+        "chosen_alphas_per_fold": [
+          {
+            "fold": 0,
+            "alphas": [
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              1.0
+            ]
+          },
+          {
+            "fold": 1,
+            "alphas": [
+              2.0,
+              2.0,
+              1.0,
+              2.0,
+              2.0,
+              2.0
+            ]
+          },
+          {
+            "fold": 2,
+            "alphas": [
+              2.0,
+              1.0,
+              2.0,
+              2.0,
+              1.0,
+              2.0
+            ]
+          },
+          {
+            "fold": 3,
+            "alphas": [
+              4.0,
+              2.0,
+              2.0,
+              4.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "fold": 4,
+            "alphas": [
+              4.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ]
+          }
+        ],
+        "alpha_grid": [
+          0.5,
+          1.0,
+          2.0,
+          4.0,
+          6.0,
+          10.0,
+          16.0,
+          24.0
+        ]
+      }
+    },
+    {
+      "name": "ridge_tfidf_fused",
+      "cv_mcrmse": 0.5273420553596851,
+      "column_rmse": {
+        "cohesion": 0.5414931436524639,
+        "syntax": 0.5205665751412637,
+        "vocabulary": 0.46409620638635446,
+        "phraseology": 0.5227533922895522,
+        "grammar": 0.5710504818233093,
+        "conventions": 0.5440925328651667
+      },
+      "fold_scores": [
+        {
+          "fold": 0,
+          "mcrmse": 0.5260391634518833,
+          "column_rmse": {
+            "cohesion": 0.5316925780552507,
+            "syntax": 0.5197371702115142,
+            "vocabulary": 0.46273463546432436,
+            "phraseology": 0.5124220435345058,
+            "grammar": 0.5822795177628897,
+            "conventions": 0.5473690356828153
+          }
+        },
+        {
+          "fold": 1,
+          "mcrmse": 0.5242667134805673,
+          "column_rmse": {
+            "cohesion": 0.5343654339564795,
+            "syntax": 0.5245916090002863,
+            "vocabulary": 0.47379270056210293,
+            "phraseology": 0.5341667932306721,
+            "grammar": 0.5572650599811133,
+            "conventions": 0.5214186841527493
+          }
+        },
+        {
+          "fold": 2,
+          "mcrmse": 0.5209035807768972,
+          "column_rmse": {
+            "cohesion": 0.5400621772427224,
+            "syntax": 0.5098557462356256,
+            "vocabulary": 0.4539240162318343,
+            "phraseology": 0.5221667772443057,
+            "grammar": 0.5633405387566446,
+            "conventions": 0.5360722289502509
+          }
+        },
+        {
+          "fold": 3,
+          "mcrmse": 0.5258425101540649,
+          "column_rmse": {
+            "cohesion": 0.5516317068487231,
+            "syntax": 0.5137560910818204,
+            "vocabulary": 0.4565943380568248,
+            "phraseology": 0.5048877942764434,
+            "grammar": 0.5697787494616663,
+            "conventions": 0.5584063811989112
+          }
+        },
+        {
+          "fold": 4,
+          "mcrmse": 0.5391412701251234,
+          "column_rmse": {
+            "cohesion": 0.5494355860010792,
+            "syntax": 0.5345349508801667,
+            "vocabulary": 0.4730748245582284,
+            "phraseology": 0.5393411537750649,
+            "grammar": 0.5821361808216573,
+            "conventions": 0.556324924714543
+          }
+        }
+      ],
+      "submission_path": "experiments\\submissions\\submission_ridge_fused.csv",
+      "extras": {
+        "feature_size": 122382,
+        "handcrafted_features": [
+          "char_count",
+          "word_count",
+          "sentence_count",
+          "paragraph_count",
+          "avg_word_len",
+          "comma_count",
+          "semicolon_count",
+          "quote_count",
+          "uppercase_ratio",
+          "digit_ratio"
+        ],
+        "chosen_alphas_per_fold": [
+          {
+            "fold": 0,
+            "alphas": [
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              1.0
+            ]
+          },
+          {
+            "fold": 1,
+            "alphas": [
+              2.0,
+              2.0,
+              1.0,
+              2.0,
+              2.0,
+              2.0
+            ]
+          },
+          {
+            "fold": 2,
+            "alphas": [
+              4.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ]
+          },
+          {
+            "fold": 3,
+            "alphas": [
+              2.0,
+              2.0,
+              2.0,
+              4.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "fold": 4,
+            "alphas": [
+              4.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "lgbm_svd_fused",
+      "cv_mcrmse": 0.5344539306350843,
+      "column_rmse": {
+        "cohesion": 0.5433259165264788,
+        "syntax": 0.5214302026077784,
+        "vocabulary": 0.47005744531255733,
+        "phraseology": 0.5355882267851966,
+        "grammar": 0.5810557221950536,
+        "conventions": 0.5552660703834412
+      },
+      "fold_scores": [
+        {
+          "fold": 0,
+          "mcrmse": 0.5397102234307355,
+          "column_rmse": {
+            "cohesion": 0.5395928006788376,
+            "syntax": 0.5240197937203528,
+            "vocabulary": 0.4799366731863977,
+            "phraseology": 0.5286865090682903,
+            "grammar": 0.5986132416431584,
+            "conventions": 0.5674123222873763
+          }
+        },
+        {
+          "fold": 1,
+          "mcrmse": 0.5267496750745355,
+          "column_rmse": {
+            "cohesion": 0.5325803225763284,
+            "syntax": 0.5275055751118478,
+            "vocabulary": 0.46680870241506744,
+            "phraseology": 0.5369361856856834,
+            "grammar": 0.5614838325276957,
+            "conventions": 0.535183432130591
+          }
+        },
+        {
+          "fold": 2,
+          "mcrmse": 0.5309219632785385,
+          "column_rmse": {
+            "cohesion": 0.5405304334764376,
+            "syntax": 0.5127831510679307,
+            "vocabulary": 0.4585508158234599,
+            "phraseology": 0.5380944764883704,
+            "grammar": 0.5830011369180832,
+            "conventions": 0.5525717658969487
+          }
+        },
+        {
+          "fold": 3,
+          "mcrmse": 0.5347870238611167,
+          "column_rmse": {
+            "cohesion": 0.5581149396310777,
+            "syntax": 0.5167143051029395,
+            "vocabulary": 0.4638557055949549,
+            "phraseology": 0.522318238786837,
+            "grammar": 0.5769464219499162,
+            "conventions": 0.5707725321009741
+          }
+        },
+        {
+          "fold": 4,
+          "mcrmse": 0.5396394865794343,
+          "column_rmse": {
+            "cohesion": 0.545484006728319,
+            "syntax": 0.5259702556712044,
+            "vocabulary": 0.4807051764840708,
+            "phraseology": 0.5514628145084306,
+            "grammar": 0.5845877767775748,
+            "conventions": 0.5496268893070064
+          }
+        }
+      ],
+      "submission_path": "experiments\\submissions\\submission_lgbm_svd.csv",
+      "extras": {
+        "svd_components": 128
+      }
+    },
+    {
+      "name": "stacked_ensemble",
+      "cv_mcrmse": 0.5187324872911527,
+      "column_rmse": {
+        "cohesion": 0.5318719277748624,
+        "syntax": 0.5096552340753897,
+        "vocabulary": 0.45649766874069136,
+        "phraseology": 0.5169009142588089,
+        "grammar": 0.562884017875366,
+        "conventions": 0.5345851610217982
+      },
+      "fold_scores": [],
+      "submission_path": "experiments\\submissions\\submission_stacked_ensemble.csv",
+      "extras": {
+        "components": [
+          "ridge_tfidf_per_target",
+          "ridge_tfidf_fused",
+          "lgbm_svd_fused"
+        ],
+        "weights_per_target": {
+          "cohesion": [
+            0.30000000000000004,
+            0.25,
+            0.44999999999999996
+          ],
+          "syntax": [
+            0.35000000000000003,
+            0.2,
+            0.4499999999999999
+          ],
+          "vocabulary": [
+            0.45,
+            0.2,
+            0.35000000000000003
+          ],
+          "phraseology": [
+            0.65,
+            0.05,
+            0.3
+          ],
+          "grammar": [
+            0.6000000000000001,
+            0.05,
+            0.3499999999999999
+          ],
+          "conventions": [
+            0.6000000000000001,
+            0.1,
+            0.29999999999999993
+          ]
+        }
+      }
+    }
+  ]
+}

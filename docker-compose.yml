@@ -1,0 +1,10 @@
+services:
+  feedback-ell-demo:
+    build: .
+    ports:
+      - "18080:8000"
+    volumes:
+      - ./experiments:/app/experiments:ro
+      - ./reports:/app/reports:ro
+    environment:
+      - PYTHONPATH=/app/src

@@ -1,0 +1,19 @@
+experiments:
+  - name: mean_baseline
+    family: baseline
+    description: Predict train-set mean scores for all essays.
+  - name: ridge_tfidf
+    family: baseline
+    description: Word and character TF-IDF with multi-output Ridge regression.
+  - name: svr_tfidf
+    family: baseline
+    description: TF-IDF features with one SVR per target.
+  - name: lgbm_text_features
+    family: baseline
+    description: Handcrafted text statistics with LightGBM regressors.
+  - name: deberta_v3_base
+    family: transformer
+    description: DeBERTa-v3-base with mean pooling and six-output regression head.
+  - name: ridge_deberta_ensemble
+    family: ensemble
+    description: Weighted average of ridge TF-IDF and DeBERTa OOF/test predictions.

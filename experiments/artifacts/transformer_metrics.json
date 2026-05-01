@@ -1,0 +1,10 @@
+{
+  "name": "deberta_v3_base",
+  "status": "skipped",
+  "reason": "PyTorch/Transformers are not installed for the active Python environment.",
+  "cv_mcrmse": null,
+  "column_rmse": {},
+  "fold_scores": [],
+  "submission_path": null,
+  "trained_folds": []
+}

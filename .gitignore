@@ -1,0 +1,55 @@
+# --- Python toolchain ---
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Secrets / private credentials (do NOT commit) ---
+CA6125.pem
+*.pem
+kaggle.json
+.env
+.env.*
+
+# --- Course-private materials (instructor copy / internal notes) ---
+"Course general information.pdf"
+Course\ general\ information.pdf
+context.md
+
+# --- Raw / intermediate data (Kaggle terms forbid redistribution) ---
+data/raw/*
+data/processed/*
+data/external/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# --- Trained model artefacts (too large for GitHub) ---
+experiments/models/*
+!experiments/models/.gitkeep
+
+# --- Deployment bundles ---
+deploy/
+*.tar.gz
+
+# --- Reports build output ---
+reports/*.pdf
+reports/figures/*.png
+reports/figures/*.svg
+
+# --- Misc ---
+wandb/
+*.log

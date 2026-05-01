@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Group 16 · Feedback Prize ELL · CA6125</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">G16</span>
+        <div>
+          <strong>Feedback Prize · ELL</strong>
+          <small>CA6125 LLM and RAG · Group 16</small>
+        </div>
+      </div>
+      <nav id="navLinks">
+        <a href="#overview" class="active">Overview</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#data">Data</a>
+        <a href="#models">Models</a>
+        <a href="#errors">Error analysis</a>
+        <a href="#demo">Try it</a>
+        <a href="#team">Team</a>
+        <a href="#submission">Submission</a>
+      </nav>
+      <div class="topbar-right">
+        <span class="status-dot"></span>
+        <span id="statusText">checking…</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="overview" class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Course project · Feedback Prize · English Language Learning</p>
+          <h1>
+            Six writing scores for every English learner essay,
+            <span class="muted">in one reproducible pipeline.</span>
+          </h1>
+          <p class="lede">
+            We train transparent linear and tree-based models on the ELLIPSE corpus,
+            blend their out-of-fold predictions per target, and expose the result
+            through this demo. Every number on this page comes from a real
+            cross-validation run, not a hand-picked submission.
+          </p>
+          <div class="hero-actions">
+            <a class="primary" href="#demo">Score an essay</a>
+            <a class="ghost" href="#models">See model evidence</a>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="kpi-card">
+            <span class="kpi-label">Best CV MCRMSE</span>
+            <strong id="kpiBest">…</strong>
+            <span class="kpi-foot" id="kpiBestModel">model loading</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Training essays</span>
+            <strong id="kpiTrain">…</strong>
+            <span class="kpi-foot">argumentative essays, ELLIPSE</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">Score targets</span>
+            <strong>6</strong>
+            <span class="kpi-foot">cohesion · syntax · vocabulary · phraseology · grammar · conventions</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="pipeline" class="panel">
+        <div class="section-title">
+          <h2>Pipeline at a glance</h2>
+          <span>data → features → component models → stacked ensemble → submission</span>
+        </div>
+        <div class="pipeline">
+          <div class="pipe-step">
+            <span class="badge">01</span>
+            <h3>Audit & split</h3>
+            <p>Verify schema, compute text statistics, build deterministic stratified folds on the rounded mean target.</p>
+          </div>
+          <div class="pipe-step">
+            <span class="badge">02</span>
+            <h3>Feature views</h3>
+            <p>Word + character TF-IDF, ten interpretable text statistics, and a 128-dim Truncated SVD projection.</p>
+          </div>
+          <div class="pipe-step">
+            <span class="badge">03</span>
+            <h3>Component models</h3>
+            <p>Per-target Ridge, Ridge with fused features, and LightGBM on SVD + statistics.</p>
+          </div>
+          <div class="pipe-step">
+            <span class="badge">04</span>
+            <h3>Stacked blend</h3>
+            <p>Convex combination per target, fitted on out-of-fold predictions to avoid leakage.</p>
+          </div>
+          <div class="pipe-step">
+            <span class="badge">05</span>
+            <h3>Submission</h3>
+            <p>Clipped scores written to <code>submission.csv</code> and reproduced inside <code>Group16_inference.ipynb</code>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="data" class="panel">
+        <div class="section-title">
+          <h2>Data audit</h2>
+          <span>everything we know about the training set</span>
+        </div>
+        <div class="cards" id="auditCards"></div>
+        <div class="grid-two">
+          <article class="chart-card">
+            <header>
+              <h3>Mean score per target</h3>
+              <small>training set, range 1.0 – 5.0</small>
+            </header>
+            <svg id="targetMeanChart" viewBox="0 0 480 220" preserveAspectRatio="xMidYMid meet"></svg>
+          </article>
+          <article class="chart-card">
+            <header>
+              <h3>Target correlations</h3>
+              <small>Pearson correlation between the six analytic targets</small>
+            </header>
+            <div id="corrHeatmap" class="heatmap"></div>
+          </article>
+        </div>
+        <article class="chart-card">
+          <header>
+            <h3>Essay length distribution</h3>
+            <small>quartile summary of word counts in the training set</small>
+          </header>
+          <svg id="lengthChart" viewBox="0 0 720 180" preserveAspectRatio="xMidYMid meet"></svg>
+        </article>
+      </section>
+
+      <section id="models" class="panel">
+        <div class="section-title">
+          <h2>Models and cross-validation</h2>
+          <span>lower MCRMSE is better; numbers come from 5-fold OOF</span>
+        </div>
+        <div class="grid-two">
+          <article class="chart-card wide">
+            <header>
+              <h3>CV MCRMSE leaderboard</h3>
+              <small>click a row to see per-target detail</small>
+            </header>
+            <table class="leaderboard">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Family</th>
+                  <th>CV MCRMSE</th>
+                  <th>Submission file</th>
+                </tr>
+              </thead>
+              <tbody id="metricsBody"></tbody>
+            </table>
+          </article>
+          <article class="chart-card">
+            <header>
+              <h3>Per-target RMSE</h3>
+              <small id="perTargetSubtitle">selected model</small>
+            </header>
+            <svg id="perTargetChart" viewBox="0 0 460 260" preserveAspectRatio="xMidYMid meet"></svg>
+          </article>
+        </div>
+        <article class="chart-card">
+          <header>
+            <h3>Fold-level stability</h3>
+            <small>per-fold MCRMSE for the highlighted model</small>
+          </header>
+          <svg id="foldChart" viewBox="0 0 720 200" preserveAspectRatio="xMidYMid meet"></svg>
+        </article>
+      </section>
+
+      <section id="errors" class="panel">
+        <div class="section-title">
+          <h2>Where the model struggles</h2>
+          <span>residuals from the stacked ensemble OOF predictions</span>
+        </div>
+        <div class="grid-two">
+          <article class="chart-card">
+            <header>
+              <h3>Error by essay length</h3>
+              <small>quartiles of word count, OOF MCRMSE</small>
+            </header>
+            <svg id="lengthBucketChart" viewBox="0 0 460 220" preserveAspectRatio="xMidYMid meet"></svg>
+          </article>
+          <article class="chart-card">
+            <header>
+              <h3>Error by score band</h3>
+              <small>average target as the bucket key</small>
+            </header>
+            <svg id="scoreBucketChart" viewBox="0 0 460 220" preserveAspectRatio="xMidYMid meet"></svg>
+          </article>
+        </div>
+        <article class="chart-card">
+          <header>
+            <h3>Per-target diagnostics</h3>
+            <small>mean residual, mean absolute error, and worst-case absolute error</small>
+          </header>
+          <table class="diag-table" id="errorTable"></table>
+        </article>
+      </section>
+
+      <section id="demo" class="panel">
+        <div class="section-title">
+          <h2>Try it on your own essay</h2>
+          <span>lightweight inference of the six writing scores</span>
+        </div>
+        <div class="demo-grid">
+          <div class="demo-input">
+            <div class="sample-tabs" id="sampleTabs"></div>
+            <textarea id="essayInput" rows="11" spellcheck="false"></textarea>
+            <div class="demo-controls">
+              <button id="predictBtn" class="primary">Predict scores</button>
+              <button id="clearBtn" class="ghost">Clear</button>
+              <span class="muted" id="wordCounter">0 words</span>
+            </div>
+            <p class="muted small" id="predictNote">
+              The hosted demo runs an interpretable surface-feature predictor so it stays fast for the
+              video walkthrough. The leaderboard above reports the actual cross-validation results from
+              the trained TF-IDF + LightGBM stacked ensemble.
+            </p>
+          </div>
+          <div class="demo-output">
+            <div class="overall-card">
+              <span class="kpi-label">Predicted overall</span>
+              <strong id="overallScore">—</strong>
+              <span class="kpi-foot">average of six targets, scale 1–5</span>
+            </div>
+            <div id="scoreBars" class="score-bars"></div>
+            <ul id="signalList" class="signal-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="team" class="panel">
+        <div class="section-title">
+          <h2>Group 16 team</h2>
+          <span>members and their main responsibilities</span>
+        </div>
+        <div class="team-grid" id="teamGrid"></div>
+      </section>
+
+      <section id="submission" class="panel">
+        <div class="section-title">
+          <h2>Submission package</h2>
+          <span>generated artifacts for Kaggle and NTULearn</span>
+        </div>
+        <div class="grid-two">
+          <article class="chart-card">
+            <header>
+              <h3>Selected model</h3>
+              <small>chosen by lowest local CV MCRMSE</small>
+            </header>
+            <pre id="finalBox">loading…</pre>
+          </article>
+          <article class="chart-card">
+            <header>
+              <h3>Available submission files</h3>
+              <small>one CSV per experiment for transparency</small>
+            </header>
+            <ul id="submissionList" class="file-list"></ul>
+          </article>
+        </div>
+      </section>
+
+      <footer class="page-foot">
+        <p>
+          Built by <strong>Group 16</strong> for CA6125 LLM and RAG · Source available on the team
+          GitHub repository · This page is a presentation aid and not the official Kaggle entry.
+        </p>
+      </footer>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
