@@ -703,6 +703,84 @@ button.primary:hover {
   margin-right: 6px;
 }
 
+.llm-rag-card {
+  display: grid;
+  gap: 12px;
+}
+
+.llm-rag-card .metric-line {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.llm-rag-card .metric-line strong {
+  font-size: 26px;
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: -0.02em;
+}
+
+.llm-rag-details {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  padding: 8px 12px;
+}
+
+.llm-rag-details summary {
+  cursor: pointer;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+.llm-rag-details[open] summary {
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.config-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.config-table th,
+.config-table td {
+  padding: 6px 4px;
+  border-bottom: 1px dashed var(--line);
+  text-align: left;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.config-table th {
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: capitalize;
+  width: 40%;
+  letter-spacing: 0;
+}
+
+.config-table td {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--ink);
+}
+
+.signal-list.small li {
+  font-size: 12px;
+}
+
+.muted.mono {
+  font-family: "JetBrains Mono", monospace;
+  word-break: break-all;
+}
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

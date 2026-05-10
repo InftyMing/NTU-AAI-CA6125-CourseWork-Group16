@@ -1,16 +1,16 @@
 # Group 16 · CA6125 LLM and RAG · Project Video Script
 
-**Target length:** 10 minutes (hard cap 15 min per course brief).
+**Target length:** 11 minutes 30 seconds (hard cap 15 min per course brief).
 **Recording resolution:** 1920 × 1080, browser at 100% zoom, terminal font ≥ 16 pt.
 **Audio:** single narrator, headset microphone, no background music. Read in a relaxed, slightly informal tone — pause for half a second between sections instead of using filler words.
 **Window layout:**
 - Tab A: live demo at `http://47.237.107.46:18080`.
 - Tab B: GitHub repo (`InftyMing/NTU-AAI-CA6125-CourseWork-Group16`).
 - Tab C: Kaggle competition page (`feedback-prize-english-language-learning`).
-- Tab D: VS Code with the project open.
+- Tab D: VS Code with the project open, plus the two notebook tabs (`LLM experiments/local training_essay_scoring_m_chip.ipynb`, `RAG experiments/kaggle inference_rag_group-16.ipynb`).
 - Tab E: the PDF report (`Group16_report.pdf`).
 
-The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with short pivots into the report and the codebase. Treat the timestamps as targets, not contracts; record once end-to-end first, then trim.
+The web demo carries the bulk of the story (roughly 7 minutes), with short pivots into the LLM/RAG notebooks, the report and the codebase. Treat the timestamps as targets, not contracts; record once end-to-end first, then trim.
 
 ---
 
@@ -102,7 +102,25 @@ The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with 
 
 ---
 
-## 5:00 – 6:00 · Error analysis
+## 5:00 – 6:30 · LLM and RAG experiments (course-aligned probes)
+
+[Screen: scroll to the new `#llm-rag` panel on the demo. Two cards visible: *Qwen2.5-1.5B + LoRA* on the left, *DeBERTa-v3-base + KNN* on the right.]
+
+> "Course is called LLM and RAG, so we deliberately added two notebook-based probes on top of the classical stack. Left card — generative LLM. We took **Qwen2.5-1.5B-Instruct**, attached a LoRA adapter on the four attention projections, rank 8, alpha 16, two-point-one-eight million trainable parameters out of one-point-five-five billion. We trained for three epochs on the full 3,911-essay set with a 10% hold-out, on Apple Silicon MPS in fp16. The model learns to emit the six analytic scores as compact JSON. Training loss converges from 0.184 to 0.165, the validation cross-entropy is logged as NaN under fp16-on-MPS — that's a known device-level numerical glitch, not a model issue, and the inferred scores on the public test essays are sensible."
+
+[Click the *Configuration* details on the LoRA card so the hyperparameters expand briefly.]
+
+> "Right card — RAG. Frozen DeBERTa-v3-base encoder, mean pooling on the last hidden state, brute-force cosine KNN with k equals 20, softmax-weight the neighbours' scores. No training at all. On the last 500 essays of the training set, with the index built on the remaining 3,411, we land at **0.5445 MCRMSE** — between single-alpha Ridge and the LightGBM SVD baseline. That's the strongest training-free baseline this dataset can offer without leaking labels."
+
+[Switch to Tab D, briefly show the two notebook files in the file tree, then close.]
+
+> "Both notebooks are in the repository under `LLM experiments/` and `RAG experiments/`. We deliberately keep the headline submission as the classical stacked ensemble at 0.519, because it's evaluated under 5-fold CV — a stricter regime than a single 500-essay hold-out. The LLM and RAG probes are reported as supplementary evidence, with a comparison table on this page so a marker can audit the trade-off in one screen."
+
+[Cut back to Tab A.]
+
+---
+
+## 6:30 – 7:30 · Error analysis
 
 [Screen: scroll to `#errors`.]
 
@@ -124,7 +142,7 @@ The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with 
 
 ---
 
-## 6:00 – 7:30 · Live prediction
+## 7:30 – 9:00 · Live prediction
 
 [Screen: scroll to `#demo`. Click the first sample tab so the textarea fills.]
 
@@ -142,7 +160,7 @@ The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with 
 
 ---
 
-## 7:30 – 8:00 · Team and submission
+## 9:00 – 9:30 · Team and submission
 
 [Screen: scroll to `#team`.]
 
@@ -156,31 +174,31 @@ The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with 
 
 ---
 
-## 8:00 – 8:30 · Report (PDF)
+## 9:30 – 10:00 · Report (PDF)
 
 [Screen: switch to Tab E. Open `Group16_report.pdf`. Scroll the abstract, then the headings panel.]
 
-> "The report mirrors the demo. Abstract on page one, problem formulation in Section 2, methodology in Section 5, results and the leaderboard table in Section 7, error analysis in Section 7.5, and the comparison between traditional and Transformer methods in Section 8. The numbers in every table on this page are the same numbers you just saw in the browser."
+> "The report mirrors the demo. Abstract on page one, problem formulation in Section 2, methodology in Section 5, results and the leaderboard table in Section 7, error analysis in Section 7.5, the LLM fine-tune in Section 7.7 and the RAG retriever in Section 7.8. Section 8 then puts traditional, LLM and RAG side by side. The numbers in every table on this page are the same numbers you just saw in the browser."
 
-[Scroll quickly to Section 8 and stop on the "Where the Transformer would help" paragraph.]
+[Scroll quickly to Section 8 and stop on the "Where the Transformer helps, in one number" paragraph.]
 
-> "Section 8 is the part the brief asks for explicitly. Our position is that a CPU-only traditional pipeline reaches 0.519, a single DeBERTa-v3-base would push us into 0.46, and an industrial ensemble like the public first place sits around 0.43. We did not run the Transformer end-to-end this round because we don't have a stable GPU; the path is still in `src/feedback_ell/transformer_model.py` for the future."
-
-[Cut.]
-
----
-
-## 8:30 – 9:00 · Code on GitHub and Kaggle inference notebook
-
-[Screen: switch to Tab B — GitHub repo. Hover `notebooks/Group16_inference.ipynb`, then click into it.]
-
-> "Source is on GitHub at `InftyMing/NTU-AAI-CA6125-CourseWork-Group16`. The Kaggle entry point is `notebooks/Group16_inference.ipynb` — that notebook reproduces the stacked ensemble end-to-end on Kaggle's hidden test set, so the marker can verify the score without retraining anything locally. Sensitive items — Kaggle tokens, raw competition data, the deploy bundle — are excluded from the repo through `.gitignore`, per the course rules about not redistributing the dataset."
+> "Section 8 is the part the brief asks for explicitly. Our position with concrete numbers: a CPU-only traditional stack reaches 0.519 on 5-fold CV, a frozen DeBERTa retriever reaches 0.544 with zero training, our LoRA-fine-tuned 1.5B LLM produces structured score JSON on the same hardware budget, and an industrial DeBERTa-large ensemble could reach 0.43 with two orders of magnitude more compute. We submit the traditional stack and ship the LLM/RAG notebooks alongside as honest evidence."
 
 [Cut.]
 
 ---
 
-## 9:00 – 9:30 · What we learned, honestly
+## 10:00 – 10:30 · Code on GitHub and Kaggle inference notebook
+
+[Screen: switch to Tab B — GitHub repo. Hover `notebooks/Group16_inference.ipynb`, click into it briefly, then go back and hover the `LLM experiments/` and `RAG experiments/` folders.]
+
+> "Source is on GitHub at `InftyMing/NTU-AAI-CA6125-CourseWork-Group16`. The Kaggle entry point for the headline submission is `notebooks/Group16_inference.ipynb` — it reproduces the stacked ensemble on Kaggle's hidden test set. The two course-aligned probes from Section 7 live in dedicated folders: `LLM experiments/` for the Qwen LoRA training and inference notebooks, and `RAG experiments/` for the DeBERTa-RAG inference notebook. Sensitive items — Kaggle tokens, raw competition data, the deploy bundle — are excluded through `.gitignore`, per the course rules about not redistributing the dataset."
+
+[Cut.]
+
+---
+
+## 10:30 – 11:00 · What we learned, honestly
 
 [Screen: back on Tab A, scrolled to the top of the demo. Don't move the mouse much.]
 
@@ -190,11 +208,11 @@ The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with 
 >
 > "Second — stacking only helps when components actually disagree. The grammar weights lean on LightGBM, the vocabulary weights lean on Ridge. If we'd stacked three near-identical models we'd have spent compute for nothing."
 >
-> "Third — the demo and the report should answer the same questions. We deliberately built the page so a marker can re-derive every claim in the PDF without trusting us."
+> "Third — engaging with the LLM/RAG axes was worth the extra week. The frozen DeBERTa retriever at 0.544 confirms that the encoder itself is doing real work, and the Qwen2.5 LoRA fine-tune shows we can deliver structured scoring on a 1.5-billion-parameter model from a laptop. Neither beats the classical stack on this dataset, but both are honest, course-relevant evidence."
 
 ---
 
-## 9:30 – 10:00 · Acknowledgements + sign-off
+## 11:00 – 11:30 · Acknowledgements + sign-off
 
 [Screen: title card again, brief credits text — group code, course code, "Thanks for watching".]
 
@@ -210,6 +228,7 @@ The web demo carries the bulk of the story (roughly 6 minutes 30 seconds), with 
 - Confirm `experiments/artifacts/final_selection.json` shows the stacked ensemble.
 - Run the demo predict twice off-camera so the first request doesn't pay the cold-start cost.
 - Have the report PDF on page one before you start; do not search inside the PDF on camera.
+- Open the two LLM/RAG notebooks (`LLM experiments/` and `RAG experiments/`) in VS Code before recording so the §5:00 cut is instant.
 - Use OBS scene transitions (cut, not fade) to keep the pace tight.
-- Total spoken time should be 9:30 – 9:50; budget 10–30 seconds for tab switches.
+- Total spoken time should be 11:00 – 11:30; budget 15–45 seconds for tab switches and notebook scroll-throughs.
 - Upload to YouTube as **unlisted**, then save the link inside `Group16_video.txt`.

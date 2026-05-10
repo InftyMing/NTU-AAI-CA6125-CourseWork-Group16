@@ -1,0 +1,98 @@
+{
+  "summary": "Two extra experiments aligned with the course title: a LoRA-fine-tuned generative LLM scorer, and a retrieval-augmented (RAG) scorer over a frozen DeBERTa encoder.",
+  "experiments": [
+    {
+      "id": "qwen_lora",
+      "name": "qwen2.5_1.5b_lora",
+      "family": "Generative LLM · LoRA",
+      "title": "Qwen2.5-1.5B-Instruct + LoRA fine-tuning",
+      "headline": "JSON-formatted scoring head; generative output post-processed and clamped to {1.0, 1.5, ..., 5.0}.",
+      "primary_metric": {
+        "key": "val_loss",
+        "label": "Validation cross-entropy",
+        "value": null,
+        "note": "Validation loss reported as NaN under fp16 on Apple Silicon (MPS) when the labels mask is sparse. Training loss converged smoothly: 0.184 -> 0.168 -> 0.165 across 3 epochs."
+      },
+      "validation": {
+        "split": "10% random hold-out from the 3911-essay training set",
+        "fold_count": 1,
+        "essays": 392,
+        "training_loss_trajectory": [
+          {"epoch": 1, "train_loss": 0.184192},
+          {"epoch": 2, "train_loss": 0.167593},
+          {"epoch": 3, "train_loss": 0.165443}
+        ]
+      },
+      "config": {
+        "base_model": "Qwen/Qwen2.5-1.5B-Instruct",
+        "trainable_params": 2179072,
+        "total_params": 1545893376,
+        "trainable_pct": 0.141,
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.05,
+        "lora_target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+        "max_length": 512,
+        "epochs": 3,
+        "batch_size": 2,
+        "grad_accum_steps": 4,
+        "effective_batch_size": 8,
+        "learning_rate": 2e-4,
+        "scheduler": "cosine with 5% warmup",
+        "optimizer": "adamw_torch",
+        "device": "Apple M-series MPS (fp16)",
+        "wall_clock_hours": 7.67
+      },
+      "prompt_strategy": "Single-turn chat: user message asks for the six rubric scores in compact JSON {cohesion, syntax, vocabulary, phraseology, grammar, conventions}. Decoder is post-processed with a regex that extracts the JSON block and snaps each value to the {1.0, 1.5, ..., 5.0} grid.",
+      "submission_path": "LLM experiments/kaggle inference_group-16.ipynb",
+      "kaggle_runtime": "Kaggle T4 GPU notebook (offline, internet disabled)",
+      "notes": [
+        "Training was performed locally on an Apple Silicon laptop (MPS, fp16); the resulting LoRA weights are uploaded as a Kaggle Models artifact and consumed by the inference notebook.",
+        "Generative output is constrained to the official rubric grid via post-processing rather than a constrained-decoding head.",
+        "MCRMSE on the public hidden test set was not measurable client-side because the Kaggle code competition does not expose ground-truth labels."
+      ]
+    },
+    {
+      "id": "deberta_rag",
+      "name": "deberta_v3_base_rag",
+      "family": "RAG · frozen encoder + KNN",
+      "title": "DeBERTa-v3-base embeddings + cosine-KNN retrieval",
+      "headline": "Mean-pooled DeBERTa-v3-base embeddings retrieve the K nearest training essays; their analytic scores are softmax-weighted by similarity.",
+      "primary_metric": {
+        "key": "val_mcrmse",
+        "label": "Validation MCRMSE",
+        "value": 0.5445,
+        "note": "Held-out validation: last 500 training essays, KNN built on the remaining 3411 essays."
+      },
+      "validation": {
+        "split": "Hold-out: last 500 essays from train.csv",
+        "fold_count": 1,
+        "essays": 500
+      },
+      "config": {
+        "encoder": "DeBERTa-v3-base (frozen)",
+        "embedding_dim": 768,
+        "max_length": 512,
+        "pooling": "Attention-mask mean pooling",
+        "retriever": "sklearn NearestNeighbors, brute-force cosine, k=20",
+        "aggregator": "Softmax over similarities (temperature=10) on neighbour analytic scores",
+        "device": "Kaggle T4 GPU",
+        "training_required": false
+      },
+      "prompt_strategy": "Non-parametric scoring: prediction = softmax(sim * 10) * neighbour_scores; no fine-tuning, no decoder.",
+      "submission_path": "RAG experiments/kaggle inference_rag_group-16.ipynb",
+      "kaggle_runtime": "Kaggle T4 GPU notebook (offline, internet disabled)",
+      "notes": [
+        "The retriever consumes only the official training corpus; no external knowledge base is required, which keeps the experiment compliant with Kaggle code-competition rules.",
+        "Validation MCRMSE 0.5445 lands between the single-alpha Ridge (0.533) and the LightGBM SVD baseline (0.534), and above the stacked classical ensemble (0.519).",
+        "Failure mode: when the neighbourhood is dominated by mid-range essays the prediction collapses toward the corpus mean, which mirrors the regression-to-the-mean pattern observed for the classical stack on extreme essays."
+      ]
+    }
+  ],
+  "comparison_with_classical": {
+    "best_classical_cv_mcrmse": 0.5187324872911527,
+    "best_classical_name": "stacked_ensemble",
+    "delta_rag_vs_stack": 0.0258,
+    "decision": "Final NTULearn submission keeps the classical stacked_ensemble as the headline entry because (a) it is evaluated under the more rigorous 5-fold stratified CV, (b) it ships as both CSV and Kaggle notebook, and (c) the LLM/RAG variants are reported alongside as evidence that the team explored the course-mandated LLM/RAG axes."
+  }
+}

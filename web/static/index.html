@@ -26,6 +26,7 @@
         <a href="#pipeline">Pipeline</a>
         <a href="#data">Data</a>
         <a href="#models">Models</a>
+        <a href="#llm-rag">LLM &amp; RAG</a>
         <a href="#errors">Error analysis</a>
         <a href="#demo">Try it</a>
         <a href="#team">Team</a>
@@ -48,8 +49,10 @@
           <p class="lede">
             We train transparent linear and tree-based models on the ELLIPSE corpus,
             blend their out-of-fold predictions per target, and expose the result
-            through this demo. Every number on this page comes from a real
-            cross-validation run, not a hand-picked submission.
+            through this demo. To honour the <em>LLM and RAG</em> theme we also ship a
+            LoRA-fine-tuned Qwen2.5-1.5B scorer and a DeBERTa + KNN retrieval baseline
+            as side-by-side notebooks. Every number on this page comes from a real
+            cross-validation or hold-out run, not a hand-picked submission.
           </p>
           <div class="hero-actions">
             <a class="primary" href="#demo">Score an essay</a>
@@ -186,6 +189,31 @@
             <svg id="foldChart" viewBox="0 0 720 200" preserveAspectRatio="xMidYMid meet"></svg>
           </article>
         </div>
+      </section>
+
+      <section id="llm-rag" class="panel">
+        <div class="section-title">
+          <h2>LLM and RAG experiments</h2>
+          <span>two course-aligned probes added on top of the classical stack</span>
+        </div>
+        <p class="lede small">
+          The course title is <em>LLM and RAG</em>, so beyond the classical stacked ensemble we also ran two
+          notebook-based experiments: a generative LLM scorer with parameter-efficient fine-tuning, and a
+          retrieval-augmented scorer that needs no training at all. Both notebooks are kept in the repo as
+          supplementary evidence; the headline submission still uses the stacked ensemble because it is
+          evaluated under 5-fold cross-validation, while the LLM/RAG runs use a single hold-out split.
+        </p>
+        <div class="grid-two" id="llmRagCards"></div>
+        <article class="chart-card" id="llmRagComparisonCard" hidden>
+          <header>
+            <h3>How they compare to the classical stack</h3>
+            <small>same training corpus, different validation regimes</small>
+          </header>
+          <p class="muted small" id="llmRagDecision"></p>
+          <div class="table-scroll">
+            <table class="diag-table" id="llmRagComparisonTable"></table>
+          </div>
+        </article>
       </section>
 
       <section id="errors" class="panel">

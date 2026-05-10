@@ -44,6 +44,7 @@ const COMPONENT_DESCRIPTIONS = {
 let metricsState = { items: [], final: {} };
 let auditState = {};
 let errorState = {};
+let llmRagState = null;
 let activeModelName = null;
 
 const el = (id) => document.getElementById(id);
@@ -381,6 +382,91 @@ function drawBucketChart(svgId, buckets, labelKey, valueKey) {
   svg.innerHTML = bars;
 }
 
+function renderLlmRag(payload) {
+  llmRagState = payload;
+  const cards = el("llmRagCards");
+  if (!cards) return;
+  if (!payload || payload.status === "missing" || !Array.isArray(payload.experiments)) {
+    cards.innerHTML = "";
+    return;
+  }
+  cards.innerHTML = payload.experiments
+    .map((exp) => {
+      const metric = exp.primary_metric || {};
+      const valueText = metric.value === null || metric.value === undefined
+        ? "n/a"
+        : Number(metric.value).toFixed(4);
+      const cfg = exp.config || {};
+      const configRows = Object.entries(cfg)
+        .filter(([, v]) => v !== null && v !== undefined && v !== "")
+        .map(([k, v]) => {
+          const value = Array.isArray(v) ? v.join(", ") : String(v);
+          return `<tr><th>${k.replace(/_/g, " ")}</th><td>${value}</td></tr>`;
+        })
+        .join("");
+      const notes = (exp.notes || [])
+        .map((note) => `<li>${note}</li>`)
+        .join("");
+      return `<article class="chart-card llm-rag-card" data-id="${exp.id}">
+        <header>
+          <h3>${exp.title}</h3>
+          <small>${exp.family}</small>
+        </header>
+        <p class="muted">${exp.headline || ""}</p>
+        <div class="metric-line">
+          <span class="kpi-label">${metric.label || "Metric"}</span>
+          <strong>${valueText}</strong>
+        </div>
+        ${metric.note ? `<p class="muted small">${metric.note}</p>` : ""}
+        <details class="llm-rag-details">
+          <summary>Configuration</summary>
+          <table class="config-table">${configRows}</table>
+        </details>
+        ${exp.prompt_strategy ? `<p class="muted small"><strong>Strategy:</strong> ${exp.prompt_strategy}</p>` : ""}
+        ${notes ? `<ul class="signal-list small">${notes}</ul>` : ""}
+        <p class="muted small mono">${exp.submission_path || ""}</p>
+      </article>`;
+    })
+    .join("");
+
+  const compareCard = el("llmRagComparisonCard");
+  const compareTable = el("llmRagComparisonTable");
+  const decisionEl = el("llmRagDecision");
+  const cmp = payload.comparison_with_classical;
+  if (compareCard && compareTable && cmp) {
+    compareCard.hidden = false;
+    if (decisionEl) decisionEl.textContent = cmp.decision || "";
+    const rows = [
+      {
+        name: `${cmp.best_classical_name} (5-fold CV)`,
+        metric: "MCRMSE",
+        value: cmp.best_classical_cv_mcrmse,
+        regime: "5-fold stratified cross-validation, n = 3911",
+      },
+      ...payload.experiments
+        .filter((exp) => exp.primary_metric && typeof exp.primary_metric.value === "number")
+        .map((exp) => ({
+          name: exp.title,
+          metric: exp.primary_metric.label,
+          value: exp.primary_metric.value,
+          regime: (exp.validation && exp.validation.split) || "hold-out",
+        })),
+    ];
+    compareTable.innerHTML = `
+      <thead>
+        <tr><th>Method</th><th>Metric</th><th class="numeric">Value</th><th>Validation</th></tr>
+      </thead>
+      <tbody>
+        ${rows
+          .map(
+            (r) =>
+              `<tr><td>${r.name}</td><td>${r.metric}</td><td class="numeric">${Number(r.value).toFixed(4)}</td><td>${r.regime}</td></tr>`
+          )
+          .join("")}
+      </tbody>`;
+  }
+}
+
 function renderTeam(payload) {
   const grid = el("teamGrid");
   grid.innerHTML = (payload.members || [])
@@ -477,7 +563,17 @@ async function runPredict() {
 }
 
 function attachNavObserver() {
-  const sections = ["overview", "pipeline", "data", "models", "errors", "demo", "team", "submission"]
+  const sections = [
+    "overview",
+    "pipeline",
+    "data",
+    "models",
+    "llm-rag",
+    "errors",
+    "demo",
+    "team",
+    "submission",
+  ]
     .map((id) => el(id))
     .filter(Boolean);
   const nav = document.querySelectorAll("#navLinks a");
@@ -516,6 +612,7 @@ async function init() {
 
     renderTeam(await getJson("/api/team"));
     renderMetrics(await getJson("/api/metrics"));
+    renderLlmRag(await getJson("/api/llm_rag"));
     renderErrorBuckets(await getJson("/api/error_analysis"));
     renderSubmission(await getJson("/api/submission"));
     el("statusText").textContent = "live";

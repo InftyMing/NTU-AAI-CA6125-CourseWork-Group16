@@ -74,6 +74,11 @@ def error_analysis():
     return read_json(ARTIFACTS / "error_analysis.json", default={"status": "missing"})
 
 
+@app.get("/api/llm_rag")
+def llm_rag():
+    return read_json(ARTIFACTS / "llm_rag_metrics.json", default={"status": "missing"})
+
+
 @app.get("/api/submission")
 def submission():
     final = read_json(ARTIFACTS / "final_selection.json", default={})
