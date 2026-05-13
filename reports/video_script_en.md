@@ -40,9 +40,9 @@ The web demo carries the bulk of the story (roughly 7 minutes), with short pivot
 
 > "Here is how the repo is laid out. Everything that produces a number lives under `src/feedback_ell`: the data audit, the baseline models, and a new module called `enhanced.py` for the per-target Ridge, the fused Ridge, the LightGBM stack, and the convex blend. The four scripts in `scripts/` are thin wrappers — audit data, run baselines, run enhanced, build submission. Whatever the scripts produce ends up as a JSON or CSV in `experiments/artifacts/` and `experiments/submissions/`. The web app reads those JSONs at request time, which is why everything you'll see in the demo is the actual cross-validation result, not a hand-edited table."
 
-[Click open `src/feedback_ell/enhanced.py` for two seconds, scroll through `_search_alpha_per_target` and `_blend_weights`, then close.]
+[Click open `src/feedback_ell/enhanced.py` for two seconds, scroll through `_ridge_per_target` and `stacked_ensemble`, then close.]
 
-> "If you're checking the code afterwards, the convex blend search lives at `_blend_weights`. We grid-search a 21-step simplex per target, on out-of-fold predictions only."
+> "If you're checking the code afterwards, the per-target alpha search lives inside `_ridge_per_target`, and the convex blend lives in `stacked_ensemble`. We grid-search a 21-step simplex per target, on out-of-fold predictions only."
 
 [Cut to Tab A — the demo top, fresh reload.]
 
