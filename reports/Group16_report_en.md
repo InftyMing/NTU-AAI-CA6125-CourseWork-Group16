@@ -246,13 +246,15 @@ We delivered a complete and reproducible system for analytic essay scoring. A pe
 
 ## 12. Team Contributions
 
+Responsibilities are reported as the final allocation we converged on after the LLM and RAG probes were added to the project scope. To keep workloads balanced, the LLM fine-tune was picked up by the coordinator alongside the bilingual report, the RAG retriever sat naturally with the data and feature owner, and the video plus PDF production was handled jointly by the literature lead and the deployment lead.
+
 | Member | Main responsibility | Contribution |
 | :--- | :--- | :--- |
-| DHAYALA MURTHY SAVITHACCDS | Literature review and problem framing | Surveyed Feedback Prize public solutions and AES research, gathered the Qwen / LoRA / DeBERTa-v3 references used in §3 and §8, drafted Sections 1, 3, and 8. |
-| HUANG ZIXUANCCDS | Data audit and feature engineering | Built the data audit module, the ten text statistics, the TF-IDF + SVD feature pipelines, and the validation slice used by the LLM and RAG probes. |
-| SUN MINGCCDS | Modelling and evaluation | Implemented MCRMSE, the cross-validation harness, all component models, the stacked ensemble, and ran the Qwen2.5-1.5B + LoRA fine-tune (§7.7) plus the DeBERTa-v3-base RAG retriever (§7.8). |
-| TAN XUAN ZHAOCCDS | Web demo and deployment | Built the FastAPI service, the SVG-based front-end (including the new *LLM and RAG* panel), the Docker image, and the Aliyun deployment. |
-| WANG QIANCCDS | Reporting, video, and coordination | Synthesised experiment results into this report and the Chinese counterpart, the video walkthrough, and the LLM/RAG narrative that ties them to the course theme. |
+| DHAYALA MURTHY SAVITHACCDS | Literature review, problem framing, and video/PDF production | Surveyed Feedback Prize public solutions and AES research, gathered the Qwen / LoRA / DeBERTa-v3 references used in §3 and §8, drafted Sections 1, 3, and 8, and co-produced the presentation video and the final PDF render of this report. |
+| HUANG ZIXUANCCDS | Data audit, feature engineering, and RAG retrieval (§7.8) | Built the data audit module, the ten text statistics, the TF-IDF + SVD feature pipelines, and the validation slice for the supplementary probes; implemented the training-free DeBERTa-v3-base + cosine-KNN retriever reported in §7.8. |
+| SUN MINGCCDS | Modelling and evaluation | Implemented MCRMSE, the cross-validation harness, the per-target Ridge / fused Ridge / LightGBM-SVD components, and the per-target convex stack that reaches the headline 0.51873 CV MCRMSE. |
+| TAN XUAN ZHAOCCDS | Web demo, deployment, and video/PDF production | Built the FastAPI service, the SVG-based front-end (including the *LLM and RAG* panel), the Docker image, and the Aliyun deployment; co-produced the recorded video walkthrough and the final PDF render. |
+| WANG QIANCCDS | Report, coordination, and LLM fine-tune (§7.7) | Coordinated the group, synthesised experiment results into the bilingual report, and ran the Qwen2.5-1.5B-Instruct + LoRA fine-tune in §7.7, including the JSON post-processor that snaps outputs to the official $\{1.0, 1.5, \dots, 5.0\}$ grid. |
 
 The team kept version control history, group chat logs, and meeting notes for verification if requested.
 
